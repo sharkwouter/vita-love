@@ -1,0 +1,23 @@
+pkgname=physfs
+pkgver=r11.6ad28f9
+pkgrel=1
+url="git@github.com:Stary2001/vita-physfs"
+source=("git+https://github.com/Stary2001/vita-physfs.git#commit=6ad28f94146853bb64247c14ababe7beca90998f")
+sha256sums=('SKIP')
+
+pkgver() {
+  cd vita-physfs
+  printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+build() {
+  cd vita-physfs
+  mkdir -p build && cd build
+  cmake -DCMAKE_TOOLCHAIN_FILE=$VITASDK/share/vita.toolchain.cmake -DCMAKE_INSTALL_PREFIX=$prefix -DPHYSFS_BUILD_SHARED=FALSE -DPHYSFS_ARCHIVE_7Z=FALSE -DPHYSFS_BUILD_TEST=FALSE ..
+  make
+}
+
+package () {
+  cd vita-physfs/build
+  make DESTDIR=$pkgdir install
+}

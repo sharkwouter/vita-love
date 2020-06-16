@@ -1,0 +1,24 @@
+pkgname=openal-soft
+pkgver=r5061.8ae67322
+pkgrel=1
+url="git@github.com:Stary2001/vita-physfs"
+source=("git+https://github.com/dwhinham/vita-openal-soft.git#commit=8ae6732297cc0c516de964e6af12e23b9aaed058")
+sha256sums=('SKIP')
+provides=('openal')
+
+pkgver() {
+  cd vita-openal-soft
+  printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+build() {
+  cd vita-openal-soft
+  mkdir -p build && cd build
+  cmake -DCMAKE_TOOLCHAIN_FILE=$VITASDK/share/vita.toolchain.cmake -DCMAKE_INSTALL_PREFIX=$prefix ..
+  make
+}
+
+package () {
+  cd vita-openal-soft/build
+  make DESTDIR=$pkgdir install
+}

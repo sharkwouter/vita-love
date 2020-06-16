@@ -1,0 +1,23 @@
+pkgname=LuaJIT
+pkgver=2.0.4
+pkgrel=1
+url="https://luajit.org/"
+source=("https://luajit.org/download/$pkgname-$pkgver.tar.gz" "luajit.patch")
+sha256sums=('620fa4eb12375021bef6e4f237cbd2dd5d49e56beb414bee052c746beef1807d' 'SKIP')
+
+
+
+prepare() {
+  cd $pkgname-$pkgver
+  patch -p1 < ../luajit.patch
+}
+
+build() {
+  cd $pkgname-$pkgver
+  make CFLAGS="-DLUAJIT_USE_SYSMALLOC -DLJ_FFI_STUB -DLUAJIT_DISABLE_JIT" HOST_CC="gcc -m32" CROSS=arm-vita-eabi- TARGET=arm BUILDMODE=static TARGET_SYS=vita
+}
+
+package () {
+  cd $pkgname-$pkgver
+  make DESTDIR=$pkgdir install
+}
