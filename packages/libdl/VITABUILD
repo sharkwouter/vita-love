@@ -1,21 +1,21 @@
 pkgname=libdl
-pkgver=20170611
+pkgver=r1.bf46551
 pkgrel=1
 url="https://github.com/hyln9/vita-libdl"
 source=("git+https://github.com/hyln9/vita-libdl.git#commit=bf46551882c344e5aebee07f15267e2ca93d78a5")
 sha256sums=('SKIP')
 
 pkgver() {
-  cd vita-openal-soft
+  cd vita-libdl
   printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
 build() {
-  cd $pkgname
-  make prefix=$prefix
+  cd vita-libdl
+  make PREFIX=$prefix
 }
 
 package () {
-  cd $pkgname
-  make DESTDIR=$pkgdir install
+  cd vita-libdl
+  make PREFIX=$prefix DESTDIR=$pkgdir install
 }
