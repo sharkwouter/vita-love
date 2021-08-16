@@ -28,11 +28,11 @@ cmake \
 make
 ```
 
-Linking is still failing, because physfs is too old and there are some other issues.
+Lua-jit can be found here: https://github.com/vitasdk/packages/pull/141
 
 ## Changes
 
-Some changes were made to the CMakeLists.txt to make sure enet and lua-sockets are not being included. Networking support is an issue for later. Some additional libraries have also been added for linking. Instead of the included physfs, the system on is used, but version 3+ is probably needed, which has not been ported to Vita yet.
+Some changes were made to the CMakeLists.txt to make sure enet and lua-sockets are not being included. Networking support is an issue for later. Some additional libraries have also been added for linking. Instead of the included physfs, the system on is used.
 
 An instance of posix_memalign being used has been replaced as well here: https://github.com/sharkwouter/vita-love/blob/42180a974a1ff21d63743a1808c923e2a67028a3/love/src/common/memory.cpp#L41
 
